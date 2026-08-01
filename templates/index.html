@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Levititas v2 — Elite Lua Obfuscator</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/levititas.css">
+</head>
+<body>
+<div class="bg-overlay"></div>
+<div class="app" id="app">
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-row">
+      <div class="brand-mark">LEVIT<span class="brand-accent">ITAS</span><span class="brand-v2">v2</span></div>
+      <button class="icon-btn sidebar-collapse" id="collapseBtn">
+        <svg viewBox="0 0 24 24" width="17" height="17"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Nav -->
+    <nav class="nav-menu" style="margin-top:6px;">
+      <div class="nav-item active" data-view="obfuscator">
+        <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        <span>Obfuscator</span>
+      </div>
+      <div class="nav-item" data-view="batch">
+        <svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 6h16M4 10h16M4 14h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Batch Mode</span>
+      </div>
+      <div class="nav-item" data-view="history">
+        <svg viewBox="0 0 24 24" width="15" height="15"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>History</span>
+      </div>
+      <div class="nav-item" data-view="docs">
+        <svg viewBox="0 0 24 24" width="15" height="15"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 2v6h6M16 13H8M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Docs</span>
+      </div>
+    </nav>
+
+    <!-- Layers -->
+    <div class="section-title" style="margin-top:10px;">Obfuscation Layers</div>
+    <div class="layer-list" id="layerList">
+
+      <!-- Base layers -->
+      <div class="layer-toggle" data-key="mangleNames">
+        <div class="layer-info">
+          <span class="layer-icon">🔀</span>
+          <div class="layer-text">
+            <div class="layer-name">Name Mangling</div>
+            <div class="layer-desc">Rename all identifiers</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="mangleNames" data-tier="base"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="encryptStrings">
+        <div class="layer-info">
+          <span class="layer-icon">🔐</span>
+          <div class="layer-text">
+            <div class="layer-name">String Encryption</div>
+            <div class="layer-desc">Rolling-XOR cipher</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="encryptStrings" data-tier="base"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="encodeNumbers">
+        <div class="layer-info">
+          <span class="layer-icon">🔢</span>
+          <div class="layer-text">
+            <div class="layer-name">Number Virtualization</div>
+            <div class="layer-desc">Lambda chain encoding</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="encodeNumbers" data-tier="base"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="injectJunk">
+        <div class="layer-info">
+          <span class="layer-icon">🧬</span>
+          <div class="layer-text">
+            <div class="layer-name">Dead Code Mutation</div>
+            <div class="layer-desc">Procedural fake code</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="injectJunk" data-tier="base"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="antiDebug">
+        <div class="layer-info">
+          <span class="layer-icon">🛡️</span>
+          <div class="layer-text">
+            <div class="layer-name">Anti-Debug</div>
+            <div class="layer-desc">Multi-layer hooks</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="antiDebug" data-tier="base"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="stripComments">
+        <div class="layer-info">
+          <span class="layer-icon">💬</span>
+          <div class="layer-text">
+            <div class="layer-name">Strip Comments</div>
+            <div class="layer-desc">Remove all comments</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="stripComments" data-tier="base"></div>
+      </div>
+
+      <!-- Priority 2 layers -->
+      <div class="layer-toggle" data-key="controlFlow">
+        <div class="layer-info">
+          <span class="layer-icon">🌀</span>
+          <div class="layer-text">
+            <div class="layer-name">Control Flow Flat <span class="layer-tier cfg">CFG</span></div>
+            <div class="layer-desc">State machine dispatch</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="controlFlow" data-tier="cfg"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="polymorphic">
+        <div class="layer-info">
+          <span class="layer-icon">🎲</span>
+          <div class="layer-text">
+            <div class="layer-name">Polymorphic <span class="layer-tier p2">P2</span></div>
+            <div class="layer-desc">Unique output every run</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="polymorphic" data-tier="p2"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="wrapEnv">
+        <div class="layer-info">
+          <span class="layer-icon">📦</span>
+          <div class="layer-text">
+            <div class="layer-name">Multi-Layer Env <span class="layer-tier p2">P2</span></div>
+            <div class="layer-desc">Nested load() sandboxes</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="wrapEnv" data-tier="p2"></div>
+      </div>
+
+      <div class="layer-toggle" data-key="vmMode">
+        <div class="layer-info">
+          <span class="layer-icon">⚙️</span>
+          <div class="layer-text">
+            <div class="layer-name">Custom VM <span class="layer-tier vm">VM</span></div>
+            <div class="layer-desc">Bytecode + interpreter</div>
+          </div>
+        </div>
+        <div class="toggle-switch on" data-key="vmMode" data-tier="vm"></div>
+      </div>
+
+    </div>
+
+    <!-- Protected names -->
+    <div class="section-title" style="margin-top:8px;">Protected Names</div>
+    <div style="padding:0 12px 8px;">
+      <input type="text" id="protectInput" placeholder="Add name, press Enter…"
+        style="width:100%;background:var(--panel-bg);border:1px solid var(--border-color);border-radius:8px;padding:7px 10px;color:var(--text-primary);font-size:12px;outline:none;font-family:inherit;">
+      <div id="protectTags" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;min-height:4px;"></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="profile-row">
+        <div class="avatar">LV2</div>
+        <div>
+          <div class="profile-name">Levititas v2.0.0</div>
+          <div class="profile-plan" id="engineStatus">
+            <span class="engine-dot fallback" id="engineDot"></span>
+            <span id="engineLabel">Checking engine…</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <button class="sidebar-expand" id="expandBtn">
+    <svg viewBox="0 0 24 24" width="17" height="17"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+  </button>
+
+  <!-- ═══════════════ MAIN ═══════════════ -->
+  <main class="main-workspace">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="icon-btn mobile-only" id="mobileSidebarBtn">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <span class="chat-title" id="viewTitle">Obfuscator</span>
+      </div>
+      <div class="top-bar-right">
+        <button class="icon-btn" id="themeBtn" title="Toggle theme">
+          <svg viewBox="0 0 24 24" width="17" height="17"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.4 5.4 0 01-7.54-7.54A9 9 0 0012 3z" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        </button>
+        <a href="https://github.com/levititas/levititas" target="_blank" class="icon-btn" title="GitHub">
+          <svg viewBox="0 0 24 24" width="17" height="17"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── OBFUSCATOR VIEW ── -->
+    <div class="view-overlay active" data-view="obfuscator">
+      <div class="obf-workspace">
+
+        <!-- Strength meter -->
+        <div class="strength-bar" id="strengthBar">
+          <span class="strength-label">Protection</span>
+          <div class="strength-track"><div class="strength-fill" id="strengthFill" style="width:0%"></div></div>
+          <span class="strength-pct" id="strengthPct">0%</span>
+          <span class="strength-grade" id="strengthGrade" style="background:var(--bg-hover);color:var(--text-tertiary);">None</span>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="stats-bar" id="statsBar" style="display:none;">
+          <div class="stat-pill"><span class="stat-label">Original</span><span class="stat-val" id="statOrig">—</span></div>
+          <div class="stat-pill"><span class="stat-label">Output</span><span class="stat-val" id="statObf">—</span></div>
+          <div class="stat-pill"><span class="stat-label">Ratio</span><span class="stat-val" id="statRatio">—</span></div>
+          <div class="stat-pill"><span class="stat-label">Lines</span><span class="stat-val" id="statLines">—</span></div>
+          <div class="stat-pill"><span class="stat-label">Time</span><span class="stat-val" id="statTime">—</span></div>
+          <span class="stat-note" id="statNote"></span>
+        </div>
+
+        <!-- Editor split -->
+        <div class="editor-split">
+
+          <!-- INPUT PANE -->
+          <div class="editor-pane" id="inputPane">
+            <div class="pane-header">
+              <span class="pane-label">
+                <svg viewBox="0 0 24 24" width="13" height="13"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                Input <span class="pane-ext">.lua</span>
+              </span>
+              <div class="pane-actions">
+                <button class="pane-btn" id="uploadBtn">
+                  <svg viewBox="0 0 24 24" width="12" height="12"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                  Upload
+                </button>
+                <button class="pane-btn" id="exampleBtn">Example</button>
+                <button class="pane-btn" id="clearBtn">Clear</button>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <div class="line-numbers" id="inLines"></div>
+              <textarea class="code-editor" id="inputEditor" spellcheck="false"
+                placeholder="-- Paste your Lua source here
+-- or Upload a .lua file
+
+local function example()
+    local secret = 'your_token_here'
+    print('Hello', secret)
+end
+example()"></textarea>
+            </div>
+            <input type="file" id="fileInput" accept=".lua" style="display:none;">
+          </div>
+
+          <!-- DIVIDER + RUN -->
+          <div class="editor-divider">
+            <button class="obf-run-btn" id="obfBtn">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
+              <span>RUN</span>
+              <span class="run-shortcut">Ctrl+↵</span>
+            </button>
+          </div>
+
+          <!-- OUTPUT PANE -->
+          <div class="editor-pane" id="outputPane">
+            <div class="pane-header">
+              <span class="pane-label">
+                <svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                Output <span class="pane-ext">obfuscated</span>
+              </span>
+              <div class="pane-actions">
+                <button class="pane-btn" id="copyBtn">
+                  <svg viewBox="0 0 24 24" width="12" height="12"><rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                  Copy
+                </button>
+                <button class="pane-btn" id="downloadBtn">
+                  <svg viewBox="0 0 24 24" width="12" height="12"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                  Download
+                </button>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <div class="line-numbers" id="outLines"></div>
+              <textarea class="code-editor" id="outputEditor" spellcheck="false" readonly
+                placeholder="-- Obfuscated output appears here…"></textarea>
+            </div>
+            <div class="obf-loading" id="obfLoading" style="display:none;">
+              <div class="obf-spinner"></div>
+              <span id="loadingMsg">Obfuscating…</span>
+            </div>
+            <div class="obf-error" id="obfError" style="display:none;">
+              <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span id="obfErrorMsg">Error</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BATCH VIEW ── -->
+    <div class="view-overlay" data-view="batch">
+      <div class="view-scroll">
+        <div class="view-header"><h2>Batch Mode</h2><p style="color:var(--text-secondary);font-size:13.5px;margin-top:4px;">Obfuscate multiple .lua files at once with identical settings.</p></div>
+        <div class="batch-drop" id="batchDrop" style="margin-top:20px;">
+          <svg viewBox="0 0 24 24" width="36" height="36" style="color:var(--text-tertiary)"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+          <p>Drop .lua files here or <button class="inline-link" id="batchBrowseBtn">browse</button></p>
+          <p style="font-size:11.5px;color:var(--text-tertiary)">Multiple files · Max 4 MB each</p>
+          <input type="file" id="batchFileInput" accept=".lua" multiple style="display:none;">
+        </div>
+        <div id="batchList" style="margin-top:16px;display:none;"></div>
+        <div id="batchActions" style="margin-top:14px;display:none;gap:10px;flex-wrap:wrap;">
+          <button class="new-chat-btn" id="runBatchBtn" style="width:auto;padding:10px 22px;">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
+            Obfuscate All
+          </button>
+          <button class="btn-secondary" id="downloadAllBtn" style="display:none;">
+            <svg viewBox="0 0 24 24" width="13" height="13"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+            Download All
+          </button>
+          <button class="pane-btn" id="clearBatchBtn">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HISTORY VIEW ── -->
+    <div class="view-overlay" data-view="history">
+      <div class="view-scroll">
+        <div class="view-header"><h2>History</h2><p style="color:var(--text-secondary);font-size:13.5px;margin-top:4px;">Last 20 sessions — stored in your browser only.</p></div>
+        <div style="margin-top:8px;display:flex;justify-content:flex-end;"><button class="pane-btn" id="clearHistoryBtn">Clear all</button></div>
+        <div id="historyEntries" style="margin-top:12px;"></div>
+      </div>
+    </div>
+
+    <!-- ── DOCS VIEW ── -->
+    <div class="view-overlay" data-view="docs">
+      <div class="view-scroll">
+        <div class="view-header"><h2>Documentation</h2></div>
+        <div class="docs-body" style="margin-top:20px;">
+          <div class="doc-section">
+            <h3>Levititas v2 — What's new?</h3>
+            <p>v2 adds four new Priority-2 layers on top of the original seven, making it structurally stronger than LuaPH and LuaRmor. Every run produces a <em>different</em> output due to polymorphic transforms and a randomized identifier style seeded from the system clock.</p>
+          </div>
+          <div class="doc-section">
+            <h3>All 10 Obfuscation Layers</h3>
+            <div class="doc-table">
+              <div class="doc-row header"><span>Layer</span><span>Description</span></div>
+              <div class="doc-row"><span>🔀 Name Mangling</span><span>Renames every local variable and function to confusing <code>IlIlllI</code>-style gibberish. Identifier style randomized per run.</span></div>
+              <div class="doc-row"><span>🔐 String Encryption</span><span>Rolling-XOR cipher — each byte's key depends on the previous plaintext byte, making brute-force much harder than a fixed key.</span></div>
+              <div class="doc-row"><span>🔢 Number Virtualization</span><span>Numbers encoded as lambda chains of XOR, rotate, and add operations. Decoded only at runtime.</span></div>
+              <div class="doc-row"><span>🧬 Dead Code Mutation</span><span>Procedurally generated realistic-looking dead code with opaque predicates (always-true/false math identities).</span></div>
+              <div class="doc-row"><span>🛡️ Anti-Debug</span><span>Hooks <code>debug.sethook</code>, detects hooked <code>pcall</code>, and measures timing anomalies typical of debuggers.</span></div>
+              <div class="doc-row"><span>💬 Strip Comments</span><span>All <code>--</code> and <code>--[[ ]]</code> comments removed from output.</span></div>
+              <div class="doc-row"><span>🌀 Control Flow Flat <span class="tier-pill cfg">CFG</span></span><span>Entire script body converted to a while-loop state machine with a randomized dispatch table. Makes decompiled code unreadable.</span></div>
+              <div class="doc-row"><span>🎲 Polymorphic <span class="tier-pill p2">P2</span></span><span>Dead code injected between code sections at random cut points. Identifier style changes every obfuscation run.</span></div>
+              <div class="doc-row"><span>📦 Multi-Layer Env <span class="tier-pill p2">P2</span></span><span>2-3 nested <code>load()</code> closures each with a sandboxed <code>setmetatable({}, {__index=_G})</code> environment and fake <code>__newindex</code> trap.</span></div>
+              <div class="doc-row"><span>⚙️ Custom VM <span class="tier-pill vm">VM</span></span><span>The entire script is encrypted with a rolling-XOR cipher and wrapped in an obfuscated bytecode interpreter. Decompilers see only the interpreter, never the original code.</span></div>
+            </div>
+          </div>
+          <div class="doc-section">
+            <h3>Quick Start</h3>
+            <div class="doc-code"><pre>pip install flask
+python server.py
+# Open http://localhost:5000</pre></div>
+          </div>
+          <div class="doc-section">
+            <h3>Free 24/7 — Cloudflare Tunnel</h3>
+            <div class="doc-code"><pre># Start server
+python server.py
+
+# New terminal — no account needed:
+cloudflared tunnel --url http://localhost:5000
+# → https://random.trycloudflare.com</pre></div>
+          </div>
+          <div class="doc-section">
+            <h3>CLI (requires Lua 5.4)</h3>
+            <div class="doc-code"><pre>lua levititas.lua script.lua
+lua levititas.lua script.lua -o out.lua --protect PlayerData
+lua levititas.lua script.lua --no-vm   # skip VM for speed</pre></div>
+          </div>
+          <div class="doc-section">
+            <h3>Keyboard Shortcuts</h3>
+            <div class="doc-table">
+              <div class="doc-row"><span>Obfuscate</span><div><kbd>Ctrl</kbd> <kbd>Enter</kbd></div></div>
+              <div class="doc-row"><span>Toggle sidebar</span><div><kbd>Ctrl</kbd> <kbd>B</kbd></div></div>
+              <div class="doc-row"><span>Toggle theme</span><div><kbd>Ctrl</kbd> <kbd>J</kbd></div></div>
+              <div class="doc-row"><span>Copy output</span><div><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>C</kbd></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
