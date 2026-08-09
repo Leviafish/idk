@@ -76,7 +76,7 @@ local function tokenize(src)
         local ch = src:sub(j,j)
         if ch == '\\' then
           local nc = src:sub(j+1,j+1)
-          local esc = {n='\n',t='\t',r='\r',['\\']='\\',["'"']="'", ['"']='"',a='\a',b='\b',f='\f',v='\v'}
+          local esc={n='\n',t='\t',r='\r',['\\']='\\',["'"]="'",['"']='"',a='\a',b='\b',f='\f',v='\v'}
           if esc[nc] then s = s .. esc[nc]; j = j + 2
           elseif nc:match('%d') then
             local num = src:match('%d%d?%d?', j+1)
