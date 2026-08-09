@@ -1,6 +1,6 @@
 --[[
 ================================================================================
-  LEVITITAS v3.2 — CLOSURE & UPVALUE AUDIT
+  LEVITITAS v3.3 — CLOSURE & UPVALUE AUDIT
   src/vm/closure_audit.lua
 
   Complete analysis of closure and upvalue correctness.

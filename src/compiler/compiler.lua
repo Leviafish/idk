@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — Compiler
+  Levititas v3.3 — Compiler
   src/compiler/compiler.lua
 
   AST → IR → Proto bytecode.

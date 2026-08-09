@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 --[[
-  Levititas v3.1 — CLI
+  Levititas v3.3 — CLI
   levititas.lua
 
   Usage: lua levititas.lua <input.lua> [options]
@@ -40,7 +40,7 @@ local Compat    = require("compat.compat")
 local function showHelp()
   print([[
 ╔═══════════════════════════════════════════════════════════════╗
-║        LEVITITAS v3.1 — Stability & Hardening Update         ║
+║        LEVITITAS v3.3 — Stabilization & Production Release         ║
 ║        Production-grade Lua obfuscator                       ║
 ╚═══════════════════════════════════════════════════════════════╝
 
@@ -83,7 +83,7 @@ Examples:
 end
 
 local function showVersion()
-  print("Levititas v3.1.0")
+  print("Levititas v3.3.0")
   print("Bytecode version: " .. Spec.BYTECODE_VERSION)
   print("Lua: " .. (_VERSION or "unknown"))
 end
@@ -154,7 +154,7 @@ fIn:close()
 -- ─────────────────────────────────────────────────────────────────────────────
 
 if verbose then
-  print("[Levititas v3.1]")
+  print("[Levititas v3.3]")
   print("  Input:   " .. input)
   print("  Output:  " .. (dryRun and "(dry run)" or output))
   print("  Target:  " .. cfg.target)
@@ -169,7 +169,7 @@ local result, err, meta = obf:obfuscate(source, fixedSeed)
 local elapsed = os.clock() - t0
 
 if not result then
-  io.stderr:write("\n[Levititas v3.1] FAILED\n")
+  io.stderr:write("\n[Levititas v3.3] FAILED\n")
   io.stderr:write("  Stage: " .. tostring(meta and meta.stage or "unknown") .. "\n")
   io.stderr:write("  Error: " .. tostring(err) .. "\n")
   if meta and meta.coverage then
@@ -196,7 +196,7 @@ if verbose and meta then
 end
 
 if dryRun then
-  print("[Levititas v3.1] Dry run complete. No output written.")
+  print("[Levititas v3.3] Dry run complete. No output written.")
   print(string.format("  Source: %d bytes | Would produce: %d bytes | Time: %.3fs",
     #source, #result, elapsed))
   os.exit(0)
@@ -214,7 +214,7 @@ end
 fOut:write(result)
 fOut:close()
 
-print(string.format("[Levititas v3.1] ✓ %s → %s | %d → %d bytes | %.3fs | seed:%d",
+print(string.format("[Levititas v3.3] ✓ %s → %s | %d → %d bytes | %.3fs | seed:%d",
   input, output, #source, #result, elapsed, meta and meta.seed or 0))
 if fixedSeed then
   print("  [Deterministic build] Reproduce with: --seed " .. tostring(fixedSeed))

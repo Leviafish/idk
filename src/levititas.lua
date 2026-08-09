@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — Main Engine
+  Levititas v3.3 — Main Engine
   src/levititas.lua
 
   Orchestrates: Parser → Compat → Validator → Compiler → VM
@@ -135,7 +135,7 @@ local function emitInterpreter(opcodeMap, protoLiteral, shuffleSeed, rng)
 
   -- Stdlib cached at top of generated file
   local lines = {}
-  lines[#lines+1] = "-- Levititas v3.1 | build " ..
+  lines[#lines+1] = "-- Levititas v3.3 | build " ..
     string.format("%08X", rng() & 0xFFFFFFFF) ..
     " | seed " .. tostring(shuffleSeed)
   lines[#lines+1] = "do"

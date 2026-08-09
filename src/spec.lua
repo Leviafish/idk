@@ -1,6 +1,6 @@
 --[[
 ================================================================================
-  LEVITITAS v3.1 — FORMAL SPECIFICATION
+  LEVITITAS v3.3 — FORMAL SPECIFICATION
   src/spec.lua
 
   This file is the single source of truth for:
@@ -317,7 +317,7 @@ Spec.ERR = {
 -- ─────────────────────────────────────────────────────────────────────────────
 
 Spec.LIMITS = {
-  MAX_INSTRUCTIONS  = 10_000_000,  -- per execution; configurable via CLI
+  MAX_INSTRUCTIONS  = 10000000,  -- per execution; configurable via CLI
   MAX_STACK_DEPTH   = 2048,        -- stack slots
   MAX_CALL_DEPTH    = 200,         -- nested function calls
   MAX_CONST_POOL    = 65535,       -- constants per proto

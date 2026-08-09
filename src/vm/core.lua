@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — VM Core
+  Levititas v3.3 — VM Core
   src/vm/core.lua
 
   Key architectural decisions vs v3:

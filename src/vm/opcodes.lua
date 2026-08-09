@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — Opcode Map Generator
+  Levititas v3.3 — Opcode Map Generator
   src/vm/opcodes.lua
 
   Generates a shuffled opcode mapping per build.

@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — AST Validator
+  Levititas v3.3 — AST Validator
   src/validation/ast_validator.lua
 
   Validates that a parsed AST:

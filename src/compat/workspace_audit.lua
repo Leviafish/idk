@@ -1,6 +1,6 @@
 --[[
 ================================================================================
-  LEVITITAS v3.2 — MODULE SYSTEM & WORKSPACE AUDIT
+  LEVITITAS v3.3 — MODULE SYSTEM & WORKSPACE AUDIT
   docs/workspace_audit.md (embedded as Lua for programmatic access)
 
   Reviews: require(), import/export, dependency graph,
@@ -101,7 +101,7 @@ WorkspaceAudit.REQUIRE_ANALYSIS = {
 
 WorkspaceAudit.DEPENDENCY_GRAPH = {
 
-  -- Levititas v3.2 internal module dependencies
+  -- Levititas v3.3 internal module dependencies
   -- Format: module → {dependencies}
 
   ["spec"]              = {},

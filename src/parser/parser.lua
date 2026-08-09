@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — Parser with Coverage Tracking
+  Levititas v3.3 — Parser with Coverage Tracking
   src/parser/parser.lua
 
   Changes from v3:

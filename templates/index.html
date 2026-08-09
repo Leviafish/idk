@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
-<title>Levititas v3.3</title>
+<title>Leviathan Obfuscator</title>
 <link rel="stylesheet" href="/static/css/design.css">
 </head>
 <body>
+
+<!-- Background layers -->
 <canvas id="bg-canvas"></canvas>
 <div id="bg-image"></div>
 <div id="bg-overlay"></div>
@@ -14,69 +16,74 @@
 <div class="app">
   <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-  <!-- SIDEBAR -->
+  <!-- ═══ SIDEBAR ═══════════════════════════════════════════════════════════ -->
   <aside class="sidebar" id="sidebar">
+
     <div class="sidebar-brand">
       <div class="brand-logo">
-        <div class="brand-icon">LV</div>
-        <div>
-          <div class="brand-text">Levititas</div>
-          <div class="brand-ver">v3.3</div>
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L3 7v5c0 5.25 3.8 10.15 9 11.5C17.2 22.15 21 17.25 21 12V7l-9-5z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-name">Leviathan</div>
+          <div class="brand-sub">Obfuscator v3.3</div>
         </div>
       </div>
-      <button class="collapse-btn" id="collapseBtn" title="Collapse (Ctrl+B)">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
+      <button class="collapse-btn" id="collapseBtn" title="Collapse sidebar (Ctrl+B)">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
       </button>
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-item active" data-view="obfuscator">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg>
-        Obfuscator
+      <div class="nav-item" data-view="dashboard" title="Dashboard">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Dashboard</span>
       </div>
-      <div class="nav-item" data-view="batch">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
-        Batch Mode
+      <div class="nav-item active" data-view="obfuscator" title="Obfuscator">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L3 7v5c0 5.25 3.8 10.15 9 11.5C17.2 22.15 21 17.25 21 12V7l-9-5z"/></svg>
+        <span>Obfuscator</span>
       </div>
-      <div class="nav-item" data-view="history">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round"/></svg>
-        History
+      <div class="nav-item" data-view="settings" title="Settings">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span>Settings</span>
       </div>
-      <div class="nav-item" data-view="settings">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        Settings
+      <div class="nav-item" data-view="themes" title="Themes">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.4 5.4 0 01-7.54-7.54A9 9 0 0012 3z"/></svg>
+        <span>Themes</span>
       </div>
     </nav>
 
-    <div class="section-label">Protection Layers</div>
-    <div class="layer-list" id="layerList"></div>
-
-    <div class="section-label" style="margin-top:6px;">Protected Names</div>
-    <div class="protect-area">
-      <input type="text" id="protectInput" class="protect-input" placeholder="Name, press Enter…">
-      <div id="protectTags" class="protect-tags"></div>
+    <!-- Layers section (shown on obfuscator view) -->
+    <div class="sidebar-section layers-section" id="layersSection">
+      <div class="section-label">Protection Layers</div>
+      <div class="layer-list" id="layerList"></div>
+      <div class="section-label" style="margin-top:10px">Protected Names</div>
+      <div class="protect-area">
+        <input type="text" id="protectInput" class="protect-input" placeholder="Name, press Enter…" autocomplete="off">
+        <div id="protectTags" class="protect-tags"></div>
+      </div>
     </div>
 
     <div class="sidebar-footer">
       <div class="engine-row">
-        <div class="eng-avatar">LV</div>
-        <div>
-          <div class="eng-name">Levititas v3.3</div>
-          <div class="eng-status">
-            <span class="eng-dot" id="engDot"></span>
-            <span id="engLabel">Checking…</span>
-          </div>
+        <span class="eng-dot" id="engDot"></span>
+        <div class="eng-info">
+          <div class="eng-name">Engine</div>
+          <div class="eng-label" id="engLabel">Checking…</div>
         </div>
       </div>
     </div>
+
   </aside>
 
-  <button class="expand-btn" id="expandBtn" title="Expand (Ctrl+B)">
-    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+  <!-- Expand button (collapsed state) -->
+  <button class="expand-btn" id="expandBtn" title="Expand sidebar (Ctrl+B)">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
   </button>
 
-  <!-- MAIN -->
-  <main class="main-workspace">
+  <!-- ═══ MAIN ═════════════════════════════════════════════════════════════ -->
+  <main class="main" id="mainContent">
+
     <header class="topbar">
       <div class="topbar-left">
         <button class="icon-btn mobile-only" id="mobileMenuBtn">
@@ -85,20 +92,136 @@
         <span class="topbar-title" id="topbarTitle">Obfuscator</span>
       </div>
       <div class="topbar-right">
-        <button class="icon-btn" id="themeBtn" title="Cycle theme">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.4 5.4 0 01-7.54-7.54A9 9 0 0012 3z"/></svg>
+        <button class="icon-btn" id="themeBtn" title="Cycle theme (Ctrl+J)">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.4 5.4 0 01-7.54-7.54A9 9 0 0012 3z"/></svg>
         </button>
-        <a href="https://github.com/levititas" target="_blank" class="icon-btn" title="GitHub">
+        <a href="https://github.com/leviathan-obfuscator" target="_blank" rel="noopener" class="icon-btn" title="GitHub">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
         </a>
       </div>
     </header>
 
-    <!-- OBFUSCATOR VIEW -->
+    <!-- ── DASHBOARD VIEW ───────────────────────────────────────────────── -->
+    <div class="view" data-view="dashboard">
+      <div class="view-scroll">
+        <div class="page-header">
+          <h1>Dashboard</h1>
+          <p>Live system status and runtime health</p>
+        </div>
+
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-card-icon status-icon-obf">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L3 7v5c0 5.25 3.8 10.15 9 11.5C17.2 22.15 21 17.25 21 12V7l-9-5z"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Obfuscator</div>
+              <div class="status-card-value" id="ds-obf">—</div>
+            </div>
+            <span class="status-badge" id="ds-obf-badge">—</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-engine">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Lua Engine</div>
+              <div class="status-card-value" id="ds-engine">—</div>
+            </div>
+            <span class="status-badge" id="ds-engine-badge">—</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-api">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">API Status</div>
+              <div class="status-card-value" id="ds-api">—</div>
+            </div>
+            <span class="status-badge" id="ds-api-badge">—</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-ping">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Ping</div>
+              <div class="status-card-value" id="ds-ping">—</div>
+            </div>
+            <span class="status-badge" id="ds-ping-badge">—</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-region">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Region</div>
+              <div class="status-card-value" id="ds-region">—</div>
+            </div>
+            <span class="status-badge online" id="ds-region-badge">—</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-ver">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Version</div>
+              <div class="status-card-value" id="ds-version">3.3.0</div>
+            </div>
+            <span class="status-badge online">stable</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-health">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Runtime Health</div>
+              <div class="status-card-value" id="ds-health">—</div>
+            </div>
+            <span class="status-badge" id="ds-health-badge">—</span>
+          </div>
+          <div class="status-card">
+            <div class="status-card-icon status-icon-uptime">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="status-card-body">
+              <div class="status-card-label">Uptime</div>
+              <div class="status-card-value" id="ds-uptime">—</div>
+            </div>
+            <span class="status-badge online" id="ds-uptime-badge">live</span>
+          </div>
+        </div>
+
+        <div class="dash-section-label">Recent Builds</div>
+        <div id="dashHistory" class="dash-history"></div>
+      </div>
+    </div>
+
+    <!-- ── OBFUSCATOR VIEW ─────────────────────────────────────────────── -->
     <div class="view active" data-view="obfuscator">
       <div class="obf-workspace">
 
-        <!-- Star-style toolbar -->
+        <!-- Obfuscation type selector (inside workflow per spec) -->
+        <div class="type-selector">
+          <div class="type-option active" data-preset="standard">
+            <div class="type-name">Standard</div>
+            <div class="type-desc">Balanced protection</div>
+          </div>
+          <div class="type-option" data-preset="quick">
+            <div class="type-name">Quick</div>
+            <div class="type-desc">Name + string only</div>
+          </div>
+          <div class="type-option" data-preset="heavy">
+            <div class="type-name">Heavy</div>
+            <div class="type-desc">CFG + all layers</div>
+          </div>
+          <div class="type-option" data-preset="maximum">
+            <div class="type-name">Maximum</div>
+            <div class="type-desc">Full VM mode</div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
         <div class="obf-toolbar">
           <div class="toolbar-group">
             <button class="tb-btn" id="uploadBtn">
@@ -114,24 +237,22 @@
               <option value="lua54">Lua 5.4</option>
               <option value="lua53">Lua 5.3</option>
               <option value="luajit">LuaJIT</option>
-              <option value="luau">Luau</option>
+              <option value="luau">Luau (Roblox)</option>
             </select>
           </div>
           <div class="toolbar-sep"></div>
           <div class="toolbar-group">
-            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:11.5px;color:var(--text-2);">
-              <div class="toggle" id="deterministicToggle" data-tier="base"></div>
+            <label class="toolbar-label">
+              <div class="toggle" id="deterministicToggle"></div>
               Deterministic
             </label>
-            <input type="text" id="seedInput" disabled
-              style="width:90px;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;color:var(--text-1);font-family:var(--font-mono);font-size:11px;padding:4px 8px;outline:none;"
-              placeholder="seed…">
-            <button class="tb-btn" id="seedRefreshBtn" title="Random seed">
+            <input type="text" id="seedInput" disabled class="seed-input" placeholder="seed…" autocomplete="off">
+            <button class="tb-btn icon-only" id="seedRefreshBtn" title="Random seed">
               <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg>
             </button>
           </div>
           <div class="toolbar-sep"></div>
-          <div class="toolbar-group" style="margin-left:auto;">
+          <div class="toolbar-group ml-auto">
             <button class="tb-btn" id="copyBtn">
               <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
               Copy
@@ -147,168 +268,143 @@
           </div>
         </div>
 
-        <!-- Strength row -->
+        <!-- Strength + stats -->
         <div class="strength-row">
-          <span class="strength-label">Protection</span>
+          <span class="strength-label">Strength</span>
           <div class="strength-track">
-            <div class="strength-fill" id="strengthFill" style="width:100%;background:var(--success);"></div>
+            <div class="strength-fill" id="strengthFill" style="width:100%"></div>
           </div>
-          <span class="strength-pct" id="strengthPct" style="color:var(--success);">100%</span>
-          <span class="strength-grade" id="strengthGrade"
-            style="background:rgba(34,211,165,.12);color:var(--success);">ELITE</span>
+          <span class="strength-pct" id="strengthPct">100%</span>
+          <span class="strength-grade" id="strengthGrade">ELITE</span>
         </div>
 
-        <!-- Stats row (hidden until obfuscated) -->
-        <div class="stats-row" id="statsRow" style="display:none;">
-          <div class="stat-chip"><span class="stat-label">Original</span><span class="stat-val" id="statOrig">—</span></div>
+        <div class="stats-row" id="statsRow" style="display:none">
+          <div class="stat-chip"><span class="stat-label">Input</span><span class="stat-val" id="statOrig">—</span></div>
           <div class="stat-chip"><span class="stat-label">Output</span><span class="stat-val" id="statObf">—</span></div>
           <div class="stat-chip"><span class="stat-label">Ratio</span><span class="stat-val" id="statRatio">—</span></div>
           <div class="stat-chip"><span class="stat-label">Lines</span><span class="stat-val" id="statLines">—</span></div>
           <div class="stat-chip"><span class="stat-label">Time</span><span class="stat-val" id="statTime">—</span></div>
-          <span class="stat-note" id="statNote"></span>
         </div>
 
-        <!-- Star-style editor split -->
+        <!-- Editor split -->
         <div class="editor-split">
-
-          <!-- INPUT PANE -->
           <div class="editor-pane" id="inputPane">
-            <div class="pane-tab-bar">
+            <div class="pane-header">
               <div class="pane-tab active">
-                <span class="pane-tab-icon">📄</span>
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 source.lua
               </div>
-              <div class="pane-tab-actions" style="margin-left:auto;">
-              </div>
+              <div class="pane-meta" id="inputMeta"></div>
             </div>
             <div class="editor-body">
-              <div class="line-nums" id="inLines">1
-</div>
+              <div class="line-nums" id="inLines">1</div>
               <textarea class="code-area" id="inputEditor" spellcheck="false"
                 autocorrect="off" autocapitalize="off"
                 placeholder="-- Paste Lua source here
--- Drag & drop a .lua file
--- or click Upload above
+-- Drag & drop a .lua file, or click Upload
 
-local secret = 'your_token'
+local secret = 'your_api_key'
 print(secret)"></textarea>
             </div>
             <input type="file" id="fileInput" accept=".lua" style="display:none">
           </div>
 
-          <!-- OUTPUT PANE -->
-          <div class="editor-pane" id="outputPane" style="position:relative;">
-            <div class="pane-tab-bar">
+          <div class="editor-pane" id="outputPane">
+            <div class="pane-header">
               <div class="pane-tab active">
-                <span class="pane-tab-icon">🛡️</span>
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L3 7v5c0 5.25 3.8 10.15 9 11.5C17.2 22.15 21 17.25 21 12V7l-9-5z"/></svg>
                 obfuscated.lua
               </div>
+              <div class="pane-meta" id="outputMeta"></div>
             </div>
             <div class="editor-body">
-              <div class="line-nums" id="outLines">1
-</div>
-              <textarea class="code-area" id="outputEditor" spellcheck="false" readonly
+              <div class="line-nums" id="outLines">1</div>
+              <textarea class="code-area" id="outputEditor" readonly spellcheck="false"
                 placeholder="-- Obfuscated output appears here
 -- Press Obfuscate or Ctrl+Enter"></textarea>
             </div>
-            <!-- Loading cover -->
-            <div class="pane-cover" id="loadingCover" style="display:none;">
+            <div class="pane-cover" id="loadingCover" style="display:none">
               <div class="spinner"></div>
               <div class="loading-msg" id="loadingMsg">Obfuscating…</div>
             </div>
-            <!-- Error cover -->
-            <div class="pane-cover err" id="errorCover" style="display:none;">
+            <div class="pane-cover err" id="errorCover" style="display:none">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg>
               <span id="errorMsg">Error</span>
+              <div class="error-detail" id="errorDetail" style="display:none"></div>
               <button class="tb-btn" id="dismissErrorBtn">Dismiss</button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- BATCH VIEW -->
-    <div class="view" data-view="batch">
-      <div class="view-scroll">
-        <div class="view-header"><h2>Batch Mode</h2><p>Obfuscate multiple .lua files at once.</p></div>
-        <div class="drop-zone" id="batchDrop">
-          <div class="drop-zone-icon">📂</div>
-          <div class="drop-zone-title">Drop .lua files here</div>
-          <div class="drop-zone-sub">or <button class="inline-link" id="batchBrowseBtn">browse files</button> · Max 4 MB each</div>
-          <input type="file" id="batchFileInput" accept=".lua" multiple style="display:none">
-        </div>
-        <div id="batchList" style="margin-top:14px;display:none;"></div>
-        <div id="batchActions" style="margin-top:12px;display:none;gap:8px;flex-wrap:wrap;">
-          <button class="btn-primary" id="runBatchBtn">
-            <svg viewBox="0 0 24 24" width="13" height="13"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
-            Obfuscate All
-          </button>
-          <button class="btn-secondary" id="downloadAllBtn" style="display:none;">Download All</button>
-          <button class="btn-secondary" id="clearBatchBtn">Clear</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- HISTORY VIEW -->
-    <div class="view" data-view="history">
-      <div class="view-scroll">
-        <div class="view-header" style="display:flex;align-items:center;justify-content:space-between;">
-          <div><h2>History</h2><p>Last 20 sessions — browser only.</p></div>
-          <button class="btn-secondary" id="clearHistoryBtn">Clear all</button>
-        </div>
-        <div id="historyEntries" style="margin-top:16px;"></div>
-      </div>
-    </div>
-
-    <!-- SETTINGS VIEW -->
+    <!-- ── SETTINGS VIEW ───────────────────────────────────────────────── -->
     <div class="view" data-view="settings">
       <div class="view-scroll">
-        <div class="view-header"><h2>Settings</h2><p>Customize appearance and behavior.</p></div>
+        <div class="page-header">
+          <h1>Settings</h1>
+          <p>Customize appearance, effects, and behavior</p>
+        </div>
         <div class="settings-grid">
 
           <div class="settings-card">
-            <div class="settings-card-header">🎨 Theme</div>
-            <div class="theme-grid" id="themeGrid"></div>
-          </div>
-
-          <div class="settings-card">
-            <div class="settings-card-header">✦ Accent Color</div>
+            <div class="settings-card-header">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.4 5.4 0 01-7.54-7.54A9 9 0 0012 3z"/></svg>
+              Accent Color
+            </div>
             <div class="accent-grid" id="accentGrid"></div>
           </div>
 
           <div class="settings-card">
-            <div class="settings-card-header">✨ Background Effect</div>
+            <div class="settings-card-header">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="21" r="1"/><path d="M12 3v14"/><path d="M5 8l7-7 7 7"/></svg>
+              Background Effect
+            </div>
             <div class="effect-grid" id="effectGrid"></div>
           </div>
 
           <div class="settings-card">
-            <div class="settings-card-header">🖼️ Background Image</div>
+            <div class="settings-card-header">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+              Background Image
+            </div>
             <div class="bg-controls">
-              <input type="text" id="bgUrlInput" class="bg-url-input" placeholder="https://… or upload below">
-              <div style="display:flex;gap:7px;">
-                <button class="btn-secondary" id="bgUploadBtn" style="font-size:11.5px;padding:6px 12px;">Upload</button>
-                <button class="btn-secondary" id="bgClearBtn" style="font-size:11.5px;padding:6px 12px;">Clear</button>
+              <input type="text" id="bgUrlInput" class="bg-url-input" placeholder="https://… or upload below" autocomplete="off">
+              <div class="bg-btn-row">
+                <button class="btn-secondary" id="bgUploadBtn">Upload image</button>
+                <button class="btn-secondary" id="bgClearBtn">Clear</button>
               </div>
               <input type="file" id="bgFileInput" accept="image/*" style="display:none">
             </div>
             <div class="settings-rows">
               <div class="settings-row">
                 <div><div class="settings-row-label">Blur</div></div>
-                <input type="range" class="settings-slider" id="bgBlurSlider" min="0" max="20" value="0">
+                <div class="slider-group">
+                  <input type="range" class="settings-slider" id="bgBlurSlider" min="0" max="20" value="0">
+                  <span class="slider-val" id="bgBlurVal">0px</span>
+                </div>
               </div>
               <div class="settings-row">
                 <div><div class="settings-row-label">Dim</div></div>
-                <input type="range" class="settings-slider" id="bgDimSlider" min="0" max="80" value="0">
+                <div class="slider-group">
+                  <input type="range" class="settings-slider" id="bgDimSlider" min="0" max="80" value="0">
+                  <span class="slider-val" id="bgDimVal">0%</span>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="settings-card">
-            <div class="settings-card-header">⚙️ General</div>
+            <div class="settings-card-header">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              General
+            </div>
             <div class="settings-rows">
               <div class="settings-row">
-                <div><div class="settings-row-label">Animations</div><div class="settings-row-desc">Transition speed</div></div>
+                <div>
+                  <div class="settings-row-label">Animations</div>
+                  <div class="settings-row-desc">Transition speed</div>
+                </div>
                 <select class="settings-select" id="animSelect">
                   <option value="full">Full</option>
                   <option value="reduced">Reduced</option>
@@ -319,12 +415,15 @@ print(secret)"></textarea>
           </div>
 
           <div class="settings-card">
-            <div class="settings-card-header">⌨ Shortcuts</div>
+            <div class="settings-card-header">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              Keyboard Shortcuts
+            </div>
             <div class="settings-rows">
-              <div class="settings-row"><div class="settings-row-label">Obfuscate</div><code style="font-family:var(--font-mono);font-size:11px;color:var(--accent-2);">Ctrl+Enter</code></div>
-              <div class="settings-row"><div class="settings-row-label">Toggle sidebar</div><code style="font-family:var(--font-mono);font-size:11px;color:var(--accent-2);">Ctrl+B</code></div>
-              <div class="settings-row"><div class="settings-row-label">Cycle theme</div><code style="font-family:var(--font-mono);font-size:11px;color:var(--accent-2);">Ctrl+J</code></div>
-              <div class="settings-row"><div class="settings-row-label">Copy output</div><code style="font-family:var(--font-mono);font-size:11px;color:var(--accent-2);">Ctrl+Shift+C</code></div>
+              <div class="settings-row"><div class="settings-row-label">Obfuscate</div><kbd>Ctrl+Enter</kbd></div>
+              <div class="settings-row"><div class="settings-row-label">Toggle sidebar</div><kbd>Ctrl+B</kbd></div>
+              <div class="settings-row"><div class="settings-row-label">Cycle theme</div><kbd>Ctrl+J</kbd></div>
+              <div class="settings-row"><div class="settings-row-label">Copy output</div><kbd>Ctrl+Shift+C</kbd></div>
             </div>
           </div>
 
@@ -332,19 +431,24 @@ print(secret)"></textarea>
       </div>
     </div>
 
-  </main>
-</div>
+    <!-- ── THEMES VIEW ─────────────────────────────────────────────────── -->
+    <div class="view" data-view="themes">
+      <div class="view-scroll">
+        <div class="page-header">
+          <h1>Themes</h1>
+          <p>Choose a visual theme for the interface</p>
+        </div>
+        <div class="settings-card" style="max-width:100%">
+          <div class="settings-card-header">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 8a4 4 0 110 8 4 4 0 010-8z"/></svg>
+            Built-in Themes
+          </div>
+          <div class="theme-grid" id="themeGrid"></div>
+        </div>
+      </div>
+    </div>
 
-<!-- Status -->
-<button class="status-fab" id="statusFab" title="Server status">
-  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3" stroke-linecap="round"/></svg>
-</button>
-<div class="status-panel hidden" id="statusPanel">
-  <div class="status-title">Server Status</div>
-  <div class="status-row"><span class="status-key">Service</span><span class="status-val online" id="statusService"><span class="status-dot online"></span>Online</span></div>
-  <div class="status-row"><span class="status-key">Engine</span><span class="status-val" id="statusEngine">—</span></div>
-  <div class="status-row"><span class="status-key">Ping</span><span class="status-val" id="statusPing">—</span></div>
-  <div class="status-row"><span class="status-key">Version</span><span class="status-val" id="statusVersion">3.3.0</span></div>
+  </main>
 </div>
 
 <div class="toast" id="toast"></div>

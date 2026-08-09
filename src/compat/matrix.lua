@@ -1,6 +1,6 @@
 --[[
 ================================================================================
-  LEVITITAS v3.2 — COMPLETE COMPATIBILITY MATRIX
+  LEVITITAS v3.3 — COMPLETE COMPATIBILITY MATRIX
   src/compat/matrix.lua
 
   Every incompatibility between Lua versions documented.
@@ -692,7 +692,7 @@ Matrix.TABLE = {
 }
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §4  SUPPORTED TARGETS FOR LEVITITAS v3.2
+-- §4  SUPPORTED TARGETS FOR LEVITITAS v3.3
 -- ─────────────────────────────────────────────────────────────────────────────
 
 Matrix.LEVITITAS_SUPPORT = {

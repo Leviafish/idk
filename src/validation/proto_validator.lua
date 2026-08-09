@@ -1,5 +1,5 @@
 --[[
-  Levititas v3.1 — Proto Validator
+  Levititas v3.3 — Proto Validator
   src/validation/proto_validator.lua
 
   Validates a compiled proto structure before the VM executes it.
