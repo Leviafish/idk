@@ -169,8 +169,6 @@ end
 local compileExpr  -- forward declaration
 local compileBlock -- forward declaration
 local compileStmt  -- forward declaration
-local compileAssignTarget -- forward declaration
-local compileFuncBody -- forward declaration
 
 local BINOP_MAP = {
   ["+"]  = "ADD",  ["-"]  = "SUB",  ["*"]  = "MUL",
@@ -505,7 +503,7 @@ end
 -- §8  ASSIGN TARGETS
 -- ─────────────────────────────────────────────────────────────────────────────
 
-local compileAssignTarget = function(ps, node, shuffleSeed)
+compileAssignTarget = function(ps, node, shuffleSeed)
   if node.type == "Name" then
     local slot = resolveLocal(ps, node.name)
     if slot then
@@ -529,7 +527,7 @@ end
 -- §9  FUNCTION BODY
 -- ─────────────────────────────────────────────────────────────────────────────
 
-local compileFuncBody = function(ps, func, shuffleSeed)
+compileFuncBody = function(ps, func, shuffleSeed)
   -- Create a sub-proto state
   local subPS = newProtoState(ps.op, ps)
 

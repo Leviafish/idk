@@ -76,11 +76,11 @@ local function tokenize(src)
         local ch = src:sub(j,j)
         if ch == '\\' then
           local nc = src:sub(j+1,j+1)
-          local esc = {n='\n',t='\t',r='\r',['\\']='\\',['\'']='"', ['"']='"',a='\a',b='\b',f='\f',v='\v'}
+          local esc = {n='\n',t='\t',r='\r',['\\']='\\',["'"']="'", ['"']='"',a='\a',b='\b',f='\f',v='\v'}
           if esc[nc] then s = s .. esc[nc]; j = j + 2
           elseif nc:match('%d') then
             local num = src:match('%d%d?%d?', j+1)
-            s = s .. string.char(tonumber(num) or 0); j = j + 1 + #num
+            s = s .. string.char(tonumber(num)); j = j + 1 + #num
           else s = s .. nc; j = j + 2 end
         elseif ch == q then j = j + 1; break
         else s = s .. ch; j = j + 1 end

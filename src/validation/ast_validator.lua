@@ -35,8 +35,6 @@ for t in pairs(Spec.AST_SCHEMAS) do KNOWN_TYPES[t] = true end
 -- FuncBody is produced by parser but not in top-level schema as a statement
 KNOWN_TYPES["FuncBody"] = true
 
-local validateField
-
 local function validateNode(node, depth, path)
   depth = depth or 0
   path  = path  or "root"
@@ -114,7 +112,7 @@ local function validateNode(node, depth, path)
   return true
 end
 
-local function validateField(val, ftype, depth, path)
+function validateField(val, ftype, depth, path)
   -- Strip optional marker
   local ft = ftype:gsub("^%?", "")
 

@@ -54,8 +54,6 @@ local function serializeBytes(t)
   return "{" .. table.concat(parts, ",") .. "}"
 end
 
-local serializeProto
-
 local function serializeConst(c)
   local t = c.t
   if t == "n" then
@@ -70,7 +68,7 @@ local function serializeConst(c)
   return '{t="n"}'
 end
 
-serializeProto = function(proto)
+function serializeProto(proto)
   -- Instructions
   local instrParts = {}
   for _, instr in ipairs(proto.i) do
