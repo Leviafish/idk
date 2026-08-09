@@ -198,6 +198,22 @@ end]],
     DJ)                  -- return DJ
 
   -- Execution loop
+  print("EXEC LOOP ARG COUNT =",
+select("#",
+    EXEC, PROTO, LOCALS, ENV, SEED, DEPTH, MAXIC,
+    INSTRS, PROTO, CONSTS, PROTO,
+    STACK, STKTOP, PC, DONE, RESULT,
+    DONE,
+    ICOUNT, ICOUNT, MAXIC,
+    PC, PC, INSTRS,
+    INSTR, INSTRS, PC,
+    PC, PC,
+    OP, INSTR,
+    AA, INSTR,
+    BB, INSTR,
+    CC, INSTR
+))
+
   lines[#lines+1] = string.format([[
 local function %s(%s, %s, %s, %s, %s, %s)
   local %s = %s.i
