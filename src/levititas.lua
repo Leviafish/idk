@@ -197,16 +197,8 @@ end]],
     DA, DJ,              -- DA._d = DJ
     DJ)                  -- return DJ
 
-
-  print("EXEC", EXEC)
-print("PROTO", PROTO)
-print("LOCALS", LOCALS)
-print("ENV", ENV)
-print("SEED", SEED)
-print("DEPTH", DEPTH)
-print("MAXIC", MAXIC)
   -- Execution loop
-local fmtOk, fmtRes = pcall(string.format,
+  lines[#lines+1] = string.format([[
 local function %s(%s, %s, %s, %s, %s, %s)
   local %s = %s.i
   local %s = %s.k
@@ -226,10 +218,6 @@ local function %s(%s, %s, %s, %s, %s, %s)
     local %s = %s[3]
     local %s = %s[4]
 ]],
-
-print("FORMAT OK =", ok)
-print(res)
-lines[#lines+1] = res
     EXEC, PROTO, LOCALS, ENV, SEED, DEPTH, MAXIC,
     INSTRS, PROTO, CONSTS, PROTO,
     STACK, STKTOP, PC, DONE, RESULT,
