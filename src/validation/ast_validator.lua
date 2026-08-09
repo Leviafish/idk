@@ -83,17 +83,22 @@ local function validateNode(node, depth, path)
     end
   end
 
-  -- Recursively validate known child nodes
-  local childFields = {
-    body=true, cond=true, func=true, obj=true, left=true,
-    right=true, operand=true, key=true, val=true,
-  }
-  for f, _ in pairs(childFields) do
-    if node[f] and type(node[f]) == "table" then
-      local ok, e = validateNode(node[f], depth+1, path.."."..f)
-      if not ok then return nil, e end
-    end
+local childFields = {
+  cond=true,
+  func=true,
+  obj=true,
+  left=true,
+  right=true,
+  operand=true,
+  key=true,
+  val=true,
+}
+for f, _ in pairs(childFields) do
+  if node[f] and type(node[f]) == "table" then
+    local ok, e = validateNode(node[f], depth+1, path.."."..f)
+    if not ok then return nil, e end
   end
+end
 
   -- Validate array fields
   local arrayFields = {"body", "targets", "vals", "args", "iters", "fields", "elseifs"}
