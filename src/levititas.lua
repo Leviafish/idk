@@ -198,8 +198,7 @@ end]],
     DJ)                  -- return DJ
 
   -- Execution loop
-  print("EXEC LOOP ARG COUNT =",
-select("#",
+error("DEBUG ARG COUNT = " .. tostring(select("#",
     EXEC, PROTO, LOCALS, ENV, SEED, DEPTH, MAXIC,
     INSTRS, PROTO, CONSTS, PROTO,
     STACK, STKTOP, PC, DONE, RESULT,
