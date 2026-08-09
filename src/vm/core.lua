@@ -33,7 +33,7 @@ local _pcall        = pcall
 local _xpcall       = xpcall
 local _setmetatable = setmetatable
 local _getmetatable = getmetatable
-local _unpack       = table.unpack or unpack
+local _unpack       = table.unpack
 local _tconcat      = table.concat
 local _tmove        = table.move
 local _smatch       = string.match
@@ -302,6 +302,7 @@ handlers.LOAD_FIELD = function(st,a,b,c)
   local k,ok,e = getConst(st,a); if not ok then return nil,e end
   local t,ok2,e2 = pop(st); if not ok2 then return nil,e2 end
   if _type(t) ~= "table" then
+    if t == nil then return nil, "cannot index nil" end
     -- Allow metamethods via regular indexing
     return push(st, t[k])
   end
@@ -312,6 +313,13 @@ handlers.STORE_FIELD = function(st,a,b,c)
   local k,ok,e = getConst(st,a); if not ok then return nil,e end
   local v,ok2,e2 = pop(st); if not ok2 then return nil,e2 end
   local t,ok3,e3 = pop(st); if not ok3 then return nil,e3 end
+  if t == nil then return nil, "cannot index nil" end
+  if k == nil then return nil, "cannot index nil" end
+  if v == nil then return nil, "cannot assign nil" end
+  local tt = _type(t)
+  if tt ~= "table" and tt ~= "userdata" then
+    return nil, _sfmt("cannot index %s", tt)
+  end
   t[k] = v
   return true
 end
@@ -319,13 +327,22 @@ end
 handlers.LOAD_INDEX = function(st,a,b,c)
   local k,ok2,e2 = pop(st); if not ok2 then return nil,e2 end
   local t,ok3,e3 = pop(st); if not ok3 then return nil,e3 end
-  return push(st, t[k])
+  if t == nil then return nil,"cannot index nil" end
+  if t ~= nil then return push(st, t[k]) end
+  return push(st, nil)
 end
 
 handlers.STORE_INDEX = function(st,a,b,c)
   local v,_,e1 = pop(st); if e1 then return nil,e1 end
   local k,_,e2 = pop(st); if e2 then return nil,e2 end
   local t,_,e3 = pop(st); if e3 then return nil,e3 end
+  if t == nil then return nil, "cannot index nil" end
+  if k == nil then return nil, "cannot index nil" end
+  if v == nil then return nil, "cannot assign nil" end
+  local tt = _type(t)
+  if tt ~= "table" and tt ~= "userdata" then
+    return nil, _sfmt("cannot index %s", tt)
+  end
   t[k] = v
   return true
 end
@@ -444,6 +461,9 @@ handlers.SET_TABLE = function(st,a,b,c)
   if _type(t) ~= "table" then
     return nil, _sfmt("[%s] SET_TABLE: top of stack is not a table", Spec.ERR.RT_TYPE_ERROR)
   end
+  if k == nil then
+    return nil, _sfmt("[%s] SET_TABLE: key is nil", Spec.ERR.RT_TYPE_ERROR)
+  end
   t[k] = v
   return true
 end
@@ -451,6 +471,9 @@ end
 handlers.GET_TABLE = function(st,a,b,c)
   local k,_,e1 = pop(st); if e1 then return nil,e1 end
   local t,_,e2 = pop(st); if e2 then return nil,e2 end
+  if _type(t) ~= "table" then
+    return nil, _sfmt("[%s] GET_TABLE: second on stack is not a table", Spec.ERR.RT_TYPE_ERROR)
+  end
   return push(st, t[k])
 end
 
@@ -630,6 +653,9 @@ handlers.SELF = function(st,a,b,c)
   -- Stack: [obj] → [method_fn, obj]
   local k,ok,e = getConst(st,a); if not ok then return nil,e end
   local obj = peek(st)  -- keep obj on stack
+  if obj == nil then
+    return nil, _sfmt("[%s] attempt to index a nil value", Spec.ERR.RT_FIELD)
+  end
   local method = obj[k]
   -- Insert method below obj
   local top = st.stackTop
